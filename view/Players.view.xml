@@ -1,0 +1,10 @@
+<mvc:View
+    controllerName="ui5seed.view.Players"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m">
+    <Page title="{i18n>Setting}">
+        <content>
+        </content>
+    </Page>
+</mvc:View>

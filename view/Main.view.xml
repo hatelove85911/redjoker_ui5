@@ -1,0 +1,22 @@
+<mvc:View
+    controllerName="ui5seed.view.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m">
+    <Page title="{i18n>mainTitle}">
+        <content>
+            <TileContainer>
+                <tiles>
+                    <StandardTile title="{i18n>NewGame}" press="toNewGame">
+                    </StandardTile>
+                    <StandardTile title="{i18n>Players}" press="toPlayers">
+                    </StandardTile>
+                    <StandardTile title="{i18n>Games}" press="toGames">
+                    </StandardTile>
+                    <StandardTile title="{i18n>Analysis}" press="toAnalysis">
+                    </StandardTile>
+                </tiles>
+            </TileContainer>
+        </content>
+    </Page>
+</mvc:View>
