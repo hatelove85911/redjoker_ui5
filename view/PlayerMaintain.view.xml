@@ -1,0 +1,9 @@
+<mvc:View
+    controllerName="ui5seed.view.PlayerMaintain"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m">
+    <Page title="{i18n>Players}">
+        
+    </Page>
+</mvc:View>

@@ -1,6 +1,7 @@
 sap.ui.define([
-    "sap/ui/core/UIComponent"
-], function(UIComponent){
+    "sap/ui/core/UIComponent",
+    "ui5seed/Router"
+], function(UIComponent, Router){
     "use strict";
     return UIComponent.extend("ui5seed.Component", {
         metadata : {
@@ -24,7 +25,7 @@ sap.ui.define([
             },
             routing: {
                 config : {
-                    routerClass : sap.ui.core.routing.Router,
+                    routerClass : Router,
                     viewType : "XML",
                     viewPath : "ui5seed.view",
                     targetAggregation : "pages",
@@ -81,6 +82,15 @@ sap.ui.define([
 
                 // var oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true);
                 // this.setModel(oModel);
+                // 
+                
+
+                var oModel = new sap.ui.model.json.JSONModel();
+                this.setModel(oModel);
+
+
+                this.pdb = TAFFY();
+                this.gdb = TAFFY();
 
                 // set device model
                 var deviceModel = new sap.ui.model.json.JSONModel({
