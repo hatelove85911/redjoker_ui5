@@ -1,10 +1,12 @@
-<mvc:View
-    controllerName="ui5seed.view.Players"
-    xmlns:mvc="sap.ui.core.mvc"
-    displayBlock="true"
-    xmlns="sap.m">
-    <Page title="{i18n>Setting}">
-        <content>
-        </content>
-    </Page>
+<mvc:View controllerName="ui5seed.view.Players"
+          xmlns:mvc="sap.ui.core.mvc"
+          displayBlock="true"
+          xmlns="sap.m">
+  <Page title="{i18n&gt;Players}">
+    <content>
+      <List items="{/Players}">
+        <StandardListItem title="{name}"></StandardListItem>
+      </List>
+    </content>
+  </Page>
 </mvc:View>

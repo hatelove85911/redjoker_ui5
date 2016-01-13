@@ -5,6 +5,7 @@
     xmlns="sap.m">
     <Page title="{i18n>Setting}">
         <content>
+            <Button text="click me" />
         </content>
     </Page>
 </mvc:View>

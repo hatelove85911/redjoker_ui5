@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?><edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" Version="1.0">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="redjoker">
+            <EntityType Name="Player">
+                <Key>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="id" Nullable="false" Type="Edm.Int16"/>
+                <Property Name="name" Nullable="false" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="Game">
+                <Key>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="id" Nullable="false" Type="Edm.Int32"/>
+                <Property Name="when" Type="Edm.DateTime"/>
+                <NavigationProperty FromRole="From_game" Name="Players" Relationship="redjoker.gameplayer" ToRole="To_player"/>
+                <NavigationProperty FromRole="From_Game" Name="Frames" Relationship="redjoker.GameFrame" ToRole="To_Frame"/>
+                <NavigationProperty FromRole="From_Game" Name="CalculationFactors" Relationship="redjoker.GameCalculationFactor" ToRole="To_CalculationFactor"/>
+            </EntityType>
+            <EntityType Name="Frame">
+                <Key>
+                    <PropertyRef Name="gameID"/>
+                    <PropertyRef Name="seq"/>
+                </Key>
+                <Property Name="gameID" Nullable="false" Type="Edm.Int32"/>
+                <Property Name="seq" Nullable="false" Type="Edm.Int16"/>
+                <Property Name="lordId" Nullable="false" Type="Edm.Int16"/>
+                <Property Name="winOrLose" Type="Edm.Boolean"/>
+                <NavigationProperty FromRole="From_Frame" Name="Lord" Relationship="redjoker.FramePlayer" ToRole="To_Player"/>
+                <NavigationProperty FromRole="From_Frame" Name="FrameCalculationFactors" Relationship="redjoker.FrameFrameCalculationFactor" ToRole="To_FrameCalculatorFactor"/>
+            </EntityType>
+            <EntityType Name="CalculationFactor">
+                <Key>
+                    <PropertyRef Name="gameID"/>
+                    <PropertyRef Name="seq"/>
+                </Key>
+                <Property Name="gameID" Nullable="false" Type="Edm.Int32"/>
+                <Property Name="seq" Nullable="false" Type="Edm.Int16"/>
+                <Property Name="name" Type="Edm.String"/>
+                <Property Name="win" Type="Edm.Int16"/>
+                <Property Name="lose" Type="Edm.Int16"/>
+            </EntityType>
+            <EntityType Name="FrameCalculationFactor">
+                <Key>
+                    <PropertyRef Name="gameID"/>
+                    <PropertyRef Name="frameSeq"/>
+                    <PropertyRef Name="factorSeq"/>
+                </Key>
+                <Property Name="gameID" Nullable="false" Type="Edm.Int32"/>
+                <Property Name="frameSeq" Nullable="false" Type="Edm.Int16"/>
+                <Property Name="factorSeq" Nullable="false" Type="Edm.Int16"/>
+                <NavigationProperty FromRole="From_FrameCalculatorFactor" Name="Factor" Relationship="redjoker.FrameCalculationFactorCalculationFactor" ToRole="To_CalculationFactor"/>
+            </EntityType>
+            <Association Name="gameplayer">
+                <End Multiplicity="*" Role="From_game" Type="redjoker.Game"/>
+                <End Multiplicity="*" Role="To_player" Type="redjoker.Player"/>
+            </Association>
+            <Association Name="FramePlayer">
+                <End Multiplicity="1" Role="From_Frame" Type="redjoker.Frame"/>
+                <End Multiplicity="1" Role="To_Player" Type="redjoker.Player"/>
+                <ReferentialConstraint>
+                    <Principal Role="To_Player">
+                        <PropertyRef Name="id"/>
+                    </Principal>
+                    <Dependent Role="From_Frame">
+                        <PropertyRef Name="lordId"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="GameFrame">
+                <End Multiplicity="1" Role="From_Game" Type="redjoker.Game"/>
+                <End Multiplicity="*" Role="To_Frame" Type="redjoker.Frame"/>
+                <ReferentialConstraint>
+                    <Principal Role="From_Game">
+                        <PropertyRef Name="id"/>
+                    </Principal>
+                    <Dependent Role="To_Frame">
+                        <PropertyRef Name="gameID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="GameCalculationFactor">
+                <End Multiplicity="1" Role="From_Game" Type="redjoker.Game"/>
+                <End Multiplicity="*" Role="To_CalculationFactor" Type="redjoker.CalculationFactor"/>
+                <ReferentialConstraint>
+                    <Principal Role="From_Game">
+                        <PropertyRef Name="id"/>
+                    </Principal>
+                    <Dependent Role="To_CalculationFactor">
+                        <PropertyRef Name="gameID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="FrameFrameCalculationFactor">
+                <End Multiplicity="1" Role="From_Frame" Type="redjoker.Frame"/>
+                <End Multiplicity="*" Role="To_FrameCalculatorFactor" Type="redjoker.FrameCalculationFactor"/>
+                <ReferentialConstraint>
+                    <Principal Role="From_Frame">
+                        <PropertyRef Name="gameID"/>
+                        <PropertyRef Name="seq"/>
+                    </Principal>
+                    <Dependent Role="To_FrameCalculatorFactor">
+                        <PropertyRef Name="gameID"/>
+                        <PropertyRef Name="frameSeq"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="FrameCalculationFactorCalculationFactor">
+                <End Multiplicity="1" Role="From_FrameCalculatorFactor" Type="redjoker.FrameCalculationFactor"/>
+                <End Multiplicity="1" Role="To_CalculationFactor" Type="redjoker.CalculationFactor"/>
+                <ReferentialConstraint>
+                    <Principal Role="To_CalculationFactor">
+                        <PropertyRef Name="gameID"/>
+                        <PropertyRef Name="seq"/>
+                    </Principal>
+                    <Dependent Role="From_FrameCalculatorFactor">
+                        <PropertyRef Name="gameID"/>
+                        <PropertyRef Name="factorSeq"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="default" m:IsDefaultEntityContainer="true">
+                <EntitySet EntityType="redjoker.Player" Name="Players"/>
+                <EntitySet EntityType="redjoker.Game" Name="Games"/>
+                <EntitySet EntityType="redjoker.Frame" Name="Frames"/>
+                <EntitySet EntityType="redjoker.CalculationFactor" Name="CalculationFactors"/>
+                <EntitySet EntityType="redjoker.FrameCalculationFactor" Name="FrameCalculationFactors"/>
+                <AssociationSet Association="redjoker.gameplayer" Name="gameplayerSet">
+                    <End EntitySet="Games" Role="From_game"/>
+                    <End EntitySet="Players" Role="To_player"/>
+                </AssociationSet>
+                <AssociationSet Association="redjoker.FramePlayer" Name="FramePlayerSet">
+                    <End EntitySet="Frames" Role="From_Frame"/>
+                    <End EntitySet="Players" Role="To_Player"/>
+                </AssociationSet>
+                <AssociationSet Association="redjoker.GameFrame" Name="GameFrameSet">
+                    <End EntitySet="Games" Role="From_Game"/>
+                    <End EntitySet="Frames" Role="To_Frame"/>
+                </AssociationSet>
+                <AssociationSet Association="redjoker.GameCalculationFactor" Name="GameCalculationFactorSet">
+                    <End EntitySet="Games" Role="From_Game"/>
+                    <End EntitySet="CalculationFactors" Role="To_CalculationFactor"/>
+                </AssociationSet>
+                <AssociationSet Association="redjoker.FrameFrameCalculationFactor" Name="FrameFrameCalculationFactorSet">
+                    <End EntitySet="Frames" Role="From_Frame"/>
+                    <End EntitySet="FrameCalculationFactors" Role="To_FrameCalculatorFactor"/>
+                </AssociationSet>
+                <AssociationSet Association="redjoker.FrameCalculationFactorCalculationFactor" Name="FrameCalculationFactorCalculationFactorSet">
+                    <End EntitySet="FrameCalculationFactors" Role="From_FrameCalculatorFactor"/>
+                    <End EntitySet="CalculationFactors" Role="To_CalculationFactor"/>
+                </AssociationSet>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
