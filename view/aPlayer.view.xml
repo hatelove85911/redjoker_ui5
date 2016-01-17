@@ -1,0 +1,16 @@
+<mvc:View
+    controllerName="ui5seed.view.aPlayer"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m">
+    <Page id="page" title="{= ${mode>/mode} === 'create' ? ${i18n>NewPlayer} : ${i18n>ChangePlayer} }" >
+        <content>
+          <VBox>
+            <items>
+              <Input placeholder="{i18n>YourName}" value="{player>/name}"></Input>
+              <Button text="{i18n>OK}" width="100%" press="ok"></Button>
+            </items>
+          </VBox>
+        </content>
+    </Page>
+</mvc:View>
